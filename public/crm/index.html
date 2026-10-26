@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM — CodeEverything</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/crm/crm.css">
+</head>
+<body>
+
+  <div id="loginScreen" class="login-screen hidden">
+    <div class="login-card">
+      <svg class="login-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M28 18 L16 32 L28 46" fill="none" stroke="#6B73C9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 18 L48 32 L36 46" fill="none" stroke="#F5F0E8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h1><b>Code</b><i>Everything</i></h1>
+      <p class="login-sub">Ingresa al CRM</p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="loginUser">Usuario</label>
+          <input type="text" id="loginUser" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="loginPass">Contraseña</label>
+          <input type="password" id="loginPass" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+        <p class="login-msg" id="loginMsg"></p>
+      </form>
+    </div>
+  </div>
+
+  <div id="appShell" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <a href="#/dashboard" class="sidebar-brand">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M28 18 L16 32 L28 46" fill="none" stroke="#6B73C9" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36 18 L48 32 L36 46" fill="none" stroke="#F5F0E8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span><b>Code</b><i>Everything</i></span>
+      </a>
+      <nav class="sidebar-nav">
+        <a href="#/dashboard" data-route="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>
+          Dashboard
+        </a>
+        <a href="#/clientes" data-route="clientes">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Clientes
+        </a>
+        <a href="#/leads" data-route="leads">
+          <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4z"/></svg>
+          Leads
+          <span class="nav-badge hidden" id="leadsBadge">0</span>
+        </a>
+        <a href="#/servicios" data-route="servicios">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Servicios
+        </a>
+        <a href="#/pedidos" data-route="pedidos">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Pedidos
+        </a>
+        <a href="#/presupuestos" data-route="presupuestos">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          Presupuestos
+        </a>
+        <a href="#/comprobantes" data-route="comprobantes">
+          <svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1z"/><path d="M8 7h8"/><path d="M8 11h8"/><path d="M8 15h5"/></svg>
+          Comprobantes
+        </a>
+        <a href="#/empresa" data-route="empresa">
+          <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M15 21V9h4a2 2 0 0 1 2 2v10"/><path d="M9 7h2"/><path d="M9 11h2"/><path d="M9 15h2"/></svg>
+          Mi empresa
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/" class="sidebar-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>
+          Ver página web
+        </a>
+        <button id="logoutBtn" class="sidebar-link">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          Cerrar sesión
+        </button>
+        <p class="sidebar-user" id="sidebarUser"></p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="hamburger" id="hamburger" aria-label="Menú">
+          <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <h2 id="pageTitle">Dashboard</h2>
+        <div class="topbar-search" id="topbarSearch">
+          <input type="search" id="globalSearch" placeholder="Buscar clientes, pedidos, comprobantes…" autocomplete="off">
+          <div class="search-panel hidden" id="searchPanel"></div>
+        </div>
+        <span class="topbar-date" id="topbarDate"></span>
+      </header>
+      <div class="view" id="view"></div>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h3 id="modalTitle"></h3>
+        <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+      </div>
+      <form id="modalForm">
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-ghost" id="modalCancel">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="modalSubmit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script src="/crm/crm.js"></script>
+</body>
+</html>
