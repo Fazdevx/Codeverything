@@ -39,6 +39,9 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   console.error(err);
+  if (err && err.dbConfig) {
+    return res.status(503).json({ ok: false, error: err.message });
+  }
   res.status(500).json({ ok: false, error: 'Error interno del servidor' });
 });
 
