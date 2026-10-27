@@ -119,7 +119,7 @@ img { max-width: 100%; display: block; }
 
 .btn-primary {
   background: var(--periwinkle);
-  color: #fff;
+  color: white;
 }
 
 .btn-primary:hover {
