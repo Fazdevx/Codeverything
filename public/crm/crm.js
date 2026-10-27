@@ -339,7 +339,7 @@
     $$('.sidebar-nav a').forEach((a) => {
       a.classList.toggle('active', a.getAttribute('data-route') === name);
     });
-    $('#sidebar').classList.remove('open');
+    setSidebar(false);
     const panel = $('#searchPanel');
     if (panel) panel.classList.add('hidden');
     view.innerHTML = '<div class="empty">Cargando…</div>';
@@ -365,7 +365,16 @@
 
   window.addEventListener('hashchange', navigate);
 
-  $('#hamburger').addEventListener('click', () => $('#sidebar').classList.toggle('open'));
+  function setSidebar(open) {
+    $('#sidebar').classList.toggle('open', open);
+    $('#sidebarOverlay').classList.toggle('hidden', !open);
+  }
+
+  $('#hamburger').addEventListener('click', () => setSidebar(!$('#sidebar').classList.contains('open')));
+  $('#sidebarOverlay').addEventListener('click', () => setSidebar(false));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setSidebar(false);
+  });
 
   /* ---------- Dashboard ---------- */
 

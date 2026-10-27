@@ -210,6 +210,13 @@ h1, h2, h3, h4 { font-family: var(--font-head); }
   padding: 8px 14px 0;
 }
 
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 12, 18, 0.5);
+  z-index: 35;
+}
+
 .main {
   flex: 1;
   margin-left: 248px;
@@ -665,6 +672,7 @@ a.icon-btn:hover { color: #25d366; border-color: #25d366; }
   border-radius: var(--radius);
   padding: 38px 42px;
   max-width: 780px;
+  overflow-x: auto;
 }
 
 .presupuesto-head {
@@ -852,6 +860,23 @@ a.icon-btn:hover { color: #25d366; border-color: #25d366; }
 
 @media (max-width: 680px) {
   .boleta-doc { padding: 12px 10px; }
+  .topbar-date { display: none; }
+  .view { padding: 14px; }
+  th, td { padding: 11px 12px; }
+  .stat { padding: 16px 18px; }
+  .chart-wrap { height: 220px; }
+  .presupuesto-doc { padding: 22px 18px; }
+}
+
+@media (max-width: 480px) {
+  .modal-overlay { padding: 12px; }
+  .modal-actions { flex-direction: column-reverse; }
+  .modal-actions .btn { width: 100%; justify-content: center; }
+  .toolbar .input-search { min-width: 0; width: 100%; }
+}
+
+@media (min-width: 861px) {
+  .sidebar-overlay { display: none !important; }
 }
 
 /* ---------- Impresión ---------- */
