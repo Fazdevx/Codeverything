@@ -3,8 +3,8 @@
   const toggle = document.getElementById('navToggle');
   const form = document.getElementById('contactForm');
   const formMsg = document.getElementById('formMsg');
-  const servicioSelect = document.getElementById('servicio');
   const submitBtn = document.getElementById('contactSubmit');
+  const serviceChecks = Array.from(document.querySelectorAll('input[name="servicios"]'));
 
   document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -23,9 +23,18 @@
   document.querySelectorAll('.link-solicitar').forEach(function (btn) {
     btn.addEventListener('click', function () {
       const servicio = btn.getAttribute('data-servicio');
-      servicioSelect.value = servicio;
+      serviceChecks.forEach(function (cb) {
+        cb.checked = cb.value === servicio;
+        cb.closest('.service-option').classList.toggle('selected', cb.checked);
+      });
       document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
       setTimeout(function () { document.getElementById('nombre').focus(); }, 600);
+    });
+  });
+
+  serviceChecks.forEach(function (cb) {
+    cb.addEventListener('change', function () {
+      cb.closest('.service-option').classList.toggle('selected', cb.checked);
     });
   });
 
@@ -36,6 +45,7 @@
 
     const nombre = form.nombre.value.trim();
     const email = form.email.value.trim();
+    const aceptaLegal = form.aceptoLegal && form.aceptoLegal.checked;
     if (!nombre) {
       formMsg.textContent = 'Ingresa tu nombre.';
       formMsg.classList.add('err');
@@ -48,11 +58,18 @@
       form.email.focus();
       return;
     }
+    if (!aceptaLegal) {
+      formMsg.textContent = 'Debes aceptar los Términos y la Política de Privacidad.';
+      formMsg.classList.add('err');
+      form.aceptoLegal.focus();
+      return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando…';
 
     try {
+      const servicios = serviceChecks.filter(function (cb) { return cb.checked; }).map(function (cb) { return cb.value; });
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +77,7 @@
           nombre: nombre,
           email: email,
           telefono: form.telefono.value.trim() || null,
-          servicio: form.servicio.value || null,
+          servicios: servicios,
           mensaje: form.mensaje.value.trim() || null,
         }),
       });
@@ -69,6 +86,7 @@
         throw new Error((json && json.error) || 'No se pudo enviar. Intenta de nuevo.');
       }
       form.reset();
+      serviceChecks.forEach(function (cb) { cb.closest('.service-option').classList.remove('selected'); });
       formMsg.textContent = '¡Gracias! Recibimos tu consulta y te contactamos a la brevedad.';
       formMsg.classList.add('ok');
     } catch (err) {
@@ -80,7 +98,7 @@
     }
   });
 
-  /* ---- Precios "Desde S/" (cargados desde el CRM) ---- */
+  /* ---- Precios desde CRM ---- */
   function normaliza(txt) {
     return String(txt || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
   }
@@ -92,19 +110,25 @@
       if (!servicios.length) return;
       var porNombre = {};
       servicios.forEach(function (s) { porNombre[normaliza(s.nombre)] = Number(s.precio) || 0; });
-      document.querySelectorAll('#servicios .card').forEach(function (card) {
-        var h3 = card.querySelector('h3');
-        if (!h3) return;
-        var precio = porNombre[normaliza(h3.textContent)];
-        if (precio > 0) {
-          var span = document.createElement('span');
-          span.className = 'precio-desde';
-          span.textContent = 'Desde S/ ' + precio.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          h3.insertAdjacentElement('afterend', span);
-        }
+      document.querySelectorAll('[data-precio-servicio]').forEach(function (el) {
+        var precio = porNombre[normaliza(el.getAttribute('data-precio-servicio'))];
+        el.textContent = precio > 0 ? 'Desde S/ ' + precio.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'COTIZAR';
       });
     })
     .catch(function () { /* la landing funciona aunque falle */ });
+
+  /* ---- Cookies ---- */
+  (function () {
+    var banner = document.getElementById('cookieBanner');
+    var accept = document.getElementById('cookieAccept');
+    var reject = document.getElementById('cookieReject');
+    if (!banner || !accept || !reject) return;
+    var consent = localStorage.getItem('ce_cookie_consent');
+    if (!consent) banner.classList.remove('hidden');
+    function save(v) { localStorage.setItem('ce_cookie_consent', v); banner.classList.add('hidden'); }
+    accept.addEventListener('click', function () { save('accepted'); });
+    reject.addEventListener('click', function () { save('necessary'); });
+  })();
 
   /* ---- Galería de trabajos (public/assets/trabajos/lista.json) ---- */
   function escHtml(s) {

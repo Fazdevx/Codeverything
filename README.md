@@ -6,7 +6,7 @@ Landing page pública y CRM en la nube para **CodeEverything** (instalación de 
 - **Comprobantes**: boletas, facturas y recibos con series peruanas (`B001-00000001`, `F001-…`, `R001-…`), RUC del emisor y DNI/RUC del cliente.
 - **Fechas y textos**: locale `es-PE` en toda la interfaz.
 
-- **Página web** (`/`): landing con los 8 servicios (incluye **instalación y mantenimiento remoto**), sección "Servicio remoto en todo el Perú", "Por qué elegirnos", FAQ y formulario de contacto que genera **leads automáticos** en el CRM.
+- **Página web** (`/`): landing con los 9 servicios (incluye **instalación, mantenimiento remoto y optimización de PC**), sección "Servicio remoto en todo el Perú", "Por qué elegirnos", FAQ y formulario de contacto que genera **leads automáticos** en el CRM.
 - **CRM** (`/crm`): login protegido con dashboard, clientes, leads (badge de nuevos + botón de WhatsApp), servicios (alta/edición/borrado), pedidos con ficha detallada y comprobantes vinculados, presupuestos imprimibles **convertibles en pedido o comprobante con un clic**, **comprobantes (boleta/factura/recibo)** con datos de empresa personalizables, **cambio de contraseña** desde el CRM y **exportación CSV** de todos los listados.
 
 ## Stack
@@ -62,7 +62,7 @@ Abre <http://localhost:3000> (`npm run dev` carga `.env` solo, no hace falta exp
 - CRM: <http://localhost:3000/crm>
 - Usuario: `admin` + la contraseña de `ADMIN_PASS` en tu `.env` (si no existe `.env`, `admin` / `admin123`).
 
-El esquema de tablas, los 8 servicios y los datos por defecto de la empresa se crean **solos en el primer request** (no hay migraciones que correr).
+El esquema de tablas, los 9 servicios y los datos por defecto de la empresa se crean **solos en el primer request** (no hay migraciones que correr).
 
 | Variable | Descripción |
 |---|---|
@@ -97,7 +97,7 @@ Notas:
 - **Región**: la región por defecto de Vercel (`iad1`, Washington D. C.) queda a ~10 ms del pooler de Supabase `us-east-2` (Ohio) — no cambies nada. Si eliges otra región para el proyecto, que sea cercana a la región del pooler de Supabase.
 - **Node**: `package.json` pide `engines.node >= 22.9.0`; Vercel usa una versión compatible sin tocar nada.
 - Para probar en local como en producción: `vercel dev` (usa las env vars del proyecto con `vercel env pull`).
-- El esquema de tablas, los 8 servicios y los datos por defecto de la empresa se crean **solos en el primer request** de cada entorno (no hay migraciones que correr; al actualizar el proyecto se agregan solos los servicios nuevos).
+- El esquema de tablas, los 9 servicios y los datos por defecto de la empresa se crean **solos en el primer request** de cada entorno (no hay migraciones que correr; al actualizar el proyecto se agregan solos los servicios nuevos).
 
 Cada cliente con el que trabajes: crea su proyecto en Supabase, usa su connection string como `SUPABASE_DB_URL` en Vercel (aparta un proyecto de Vercel por cliente si quieres aislar también los despliegues), y listo — CRM y web quedarán aislados con sus propios datos.
 
